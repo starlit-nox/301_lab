@@ -1,35 +1,42 @@
-import React from 'react'
+import React from "react";
 // this is a bootstrap for buttons for react
-import Button from 'react-bootstrap/Button';
-
+import Button from "react-bootstrap/Button";
+import Card from "react-bootstrap/Card";
+import Modal from "./SelectedBeast";
 
 class HornedBeasts extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            clickImage: 0
-        };
-      }
+  constructor(props) {
+    super(props);
+    this.state = {
+      clickImage: 0,
+    };
+  }
 
-      clickImage = () => {
-        this.setState({ 
-            clickImage: this.state.clickImage + 1 
-        });
-      }
-    render() {
-        return (
-            <div className="HornedList">
-                {/* this is the bootstrap item added, it's a button that does NOTHING */}
-                <Button>Just a Button</Button>
-                {/* this is what hornedbest is passing through */}
-                <h2>{this.props.title}</h2>
-                {/* this lets the user click the image to add hearts to the vote */}
-                <img onClick={this.clickImage} src={this.props.imageUrl} alt={this.props.keyword} title={this.props.title}/>
-                <p>{this.props.description}</p>
-                <span>♥ {this.state.clickImage}</span>
-            </div>
-        );
-    }
+  clickImage = () => {
+    this.setState({
+      clickImage: this.state.clickImage + 1,
+    });
+  };
+  render() {
+    return (
+      <div className="HornedList">
+        <Card style={{ width: "500px" }}>
+          {/* this is what hornedbest is passing through */}
+          <h2>{this.props.title}</h2>
+          {/* this lets the user click the image to add hearts to the vote */}
+          <img
+            onClick={this.clickImage}
+            src={this.props.imageUrl}
+            alt={this.props.keyword}
+            title={this.props.title}
+          />
+          <p>{this.props.description}</p>
+          <Button> Enlarge Image </Button>
+          <span>♥ {this.state.clickImage}</span>
+        </Card>
+      </div>
+    );
+  }
 }
 
 export default HornedBeasts;
