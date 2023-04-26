@@ -1,15 +1,15 @@
-import React from "react";
-import Card from "react-bootstrap/Card";
-import SelectedBeast from "./SelectedBeast";
+import React from 'react';
+import Button from 'react-bootstrap/Button';
+import Card from 'react-bootstrap/Card';
 
 class HornedBeasts extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      clickImage: 0,
-      show: false,
-    };
-  }
+  state = {
+    clickImage: 0,
+  };
+
+  toggleViewImg = () => {
+    this.props.onEnlargeImage(this.props.imageUrl);
+  };
 
   clickImage = () => {
     this.setState({
@@ -17,34 +17,16 @@ class HornedBeasts extends React.Component {
     });
   };
 
-  handleClose = () => {
-    this.setState({ show: false });
-  };
-
-  handleShow = () => {
-    this.setState({ show: true });
-  };
-
   render() {
     return (
       <div className="HornedList">
-        <Card style={{ width: "300px", height: "300px" }}>
+        <Card style={{ width: '500px' }}>
           <h2>{this.props.title}</h2>
-          <img
-            onClick={this.handleShow}
-            src={this.props.imageUrl}
-            alt={this.props.keyword}
-            title={this.props.title}
-            style={{ width: "100%", height: "200px", objectFit: "cover" }}
-          />
+          <img onClick={this.clickImage} src={this.props.imageUrl} alt={this.props.keyword} title={this.props.title}  />
           <p>{this.props.description}</p>
           <span>♥ {this.state.clickImage}</span>
+          <Button onClick={this.props.onSelectBeast.bind(null, this.props)} src={this.props.imageUrl} alt={this.props.keyword} title={this.props.title} >Enlarge Image</Button>
         </Card>
-        <SelectedBeast
-          show={this.state.show}
-          selectedImg={this.props}
-          handleClose={this.handleClose}
-        />
       </div>
     );
   }
