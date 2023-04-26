@@ -1,45 +1,56 @@
-import React, { Component } from 'react';
-import './App.css';
+import React from 'react';
 import Header from './Components/Header';
-import Main from './Components/Main';
 import Footer from './Components/Footer';
+import './App.css';
+import Main from './Components/Main';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import data from './data.json';
 import SelectedBeast from './Components/SelectedBeast';
 
-
-class App extends Component {
+class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      imageData: data,
-      selectedImage: null,
-      showModal: false,
+      selectedBeast: null,
+      enlargedImageUrl: null,
     };
   }
 
-  handleImageSelect = (image) => {
-    this.setState({
-      selectedImage: image,
-      showModal: true,
-    });
+  handleSelectBeast = (beast) => {
+    this.setState({ selectedBeast: beast });
   };
 
-  handleCloseModal = () => {
-    this.setState({
-      selectedImage: null,
-      showModal: false,
-    });
+  handleClose = () => {
+    this.setState({ selectedBeast: null });
+  };
+
+  handleEnlargeImage = (imageUrl) => {
+    this.setState({ enlargedImageUrl: imageUrl });
+  };
+
+  handleHideEnlarged = () => {
+    this.setState({ enlargedImageUrl: null });
   };
 
   render() {
     return (
-      <div className="App">
+      <div>
         <Header />
-        <Main imageData={this.state.imageData} handleImageSelect={this.handleImageSelect} />
-        <Footer />
-        {this.state.showModal && (
-          <SelectedBeast selectedImage={this.state.selectedImage} handleCloseModal={this.handleCloseModal} />
+        <Main 
+          imageData={data} 
+          onSelectBeast={this.handleSelectBeast}
+          onEnlargeImage={this.handleEnlargeImage} 
+        />
+        <SelectedBeast
+          beast={this.state.selectedBeast}
+          onClose={this.handleClose}
+        />
+        {this.state.enlargedImageUrl && (
+          <div className="enlarged-container" onClick={this.handleHideEnlarged}>
+            <img src={this.state.enlargedImageUrl} className="enlarged-image" alt="" />
+          </div>
         )}
+        <Footer />
       </div>
     );
   }
