@@ -2,7 +2,7 @@ import React from "react";
 // this is a bootstrap for buttons for react
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
-import Modal from "./SelectedBeast";
+// import SelectedBeast from "./SelectedBeast";
 
 class HornedBeasts extends React.Component {
   constructor(props) {
@@ -12,11 +12,22 @@ class HornedBeasts extends React.Component {
     };
   }
 
+
   clickImage = () => {
     this.setState({
       clickImage: this.state.clickImage + 1,
     });
   };
+
+class App extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state {
+      setViewImg: false,
+    };
+  }
+}
+
   render() {
     return (
       <div className="HornedList">
@@ -31,9 +42,11 @@ class HornedBeasts extends React.Component {
             title={this.props.title}
           />
           <p>{this.props.description}</p>
-          <Button> Enlarge Image </Button>
           <span>♥ {this.state.clickImage}</span>
         </Card>
+        <App>
+        <Button onClick={() => {setViewImg(true);}}> Enlarge Image </Button>
+        </App>
       </div>
     );
   }
