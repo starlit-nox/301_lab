@@ -6,6 +6,7 @@ import Main from './Components/Main';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import data from './data.json';
 import SelectedBeast from './Components/SelectedBeast';
+import BeastFilter from './Components/BeastFilter';
 
 class App extends React.Component {
   constructor(props) {
@@ -13,6 +14,7 @@ class App extends React.Component {
     this.state = {
       selectedBeast: null,
       enlargedImageUrl: null,
+      filter: "",
     };
   }
 
@@ -32,19 +34,25 @@ class App extends React.Component {
     this.setState({ enlargedImageUrl: null });
   };
 
+  handleFilterChange = (filter) => {
+    this.setState({ filter });
+  };
+
   render() {
+    const filteredData = this.state.filter
+      ? data.filter((beast) => beast.horns === Number(this.state.filter))
+      : data;
+
     return (
       <div>
         <Header />
-        <Main 
-          imageData={data} 
+        <BeastFilter beasts={data} onFilterChange={this.handleFilterChange} />
+        <Main
+          imageData={filteredData}
           onSelectBeast={this.handleSelectBeast}
-          onEnlargeImage={this.handleEnlargeImage} 
+          onEnlargeImage={this.handleEnlargeImage}
         />
-        <SelectedBeast
-          beast={this.state.selectedBeast}
-          onClose={this.handleClose}
-        />
+        <SelectedBeast beast={this.state.selectedBeast} onClose={this.handleClose} />
         {this.state.enlargedImageUrl && (
           <div className="enlarged-container" onClick={this.handleHideEnlarged}>
             <img src={this.state.enlargedImageUrl} className="enlarged-image" alt="" />
